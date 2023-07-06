@@ -6,6 +6,7 @@ import { ICar, getTop10, getbyId } from '@/services/data';
 import { GetStaticProps, InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { FiArrowLeft, FiClock, FiMapPin, FiTool } from 'react-icons/fi';
 
 type Props = {
@@ -63,6 +64,12 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
 type DetailProps = InferGetServerSidePropsType<typeof getStaticProps>;
 
 const Detail = ({ car }: DetailProps) => {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <h2>Carregando...</h2>;
+  }
+
   return (
     <div className="w-full flex justify-center bg-gray-100 min-h-screen">
       <div className="flex flex-col w-full m-4 md:w-2/3 xl:w-1/2">
